@@ -8,36 +8,39 @@ import "./StaffEventPage.css";
 const TYPE_ICON = { EQUIPMENT: "🔧", STAFF: "👤", VENUE: "🏛️" };
 
 export default function StaffEventPage() {
-  const eventId = 1; // Replace with: const { eventId } = useParams();
-  const [event, setEvent] = useState(null);
+  const eventId = 1; // TODO: replace with useParams()
+  const [event, setEvent]     = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError]     = useState(null);
 
   useEffect(() => {
     HttpService.get(`/api/staff/event-details/${eventId}`)
       .then((res) => setEvent(res.data))
-      .catch(() => setError("Failed to load event details. Please try again."))
+      .catch(() => setError("Could not load event details. Please try again."))
       .finally(() => setLoading(false));
   }, [eventId]);
 
-  const formatDate = (dt) => new Date(dt).toLocaleDateString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" });
-  const formatTime = (dt) => new Date(dt).toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" });
+  const formatDate = (dt) =>
+    new Date(dt).toLocaleDateString("en-IN", { weekday: "long", year: "numeric", month: "long", day: "numeric" });
+  const formatTime = (dt) =>
+    new Date(dt).toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit" });
 
   return (
     <div className="sep-page">
       <Navbar />
       <main className="sep-main">
+
         <div className="sep-title-row">
-          <p className="sep-breadcrumb">Staff → My Assignment</p>
+          <p className="sep-breadcrumb">Staff &rarr; My Assignment</p>
           <h1 className="sep-page-title">Event Details</h1>
         </div>
 
         {loading && (
           <div className="sep-center-box">
-            <div className="sep-spinner" />
-            <p className="sep-loading-text">Loading your assignment...</p>
+            <p className="sep-loading-text">Loading please wait...</p>
           </div>
         )}
+
         {error && (
           <div className="sep-error-box">
             <span>⚠️</span><p>{error}</p>
@@ -50,9 +53,13 @@ export default function StaffEventPage() {
             {/* Main event card */}
             <div className="sep-main-card">
 
-              {/* ── Event Banner Image ── */}
+              {/* Banner */}
               <div className="sep-banner">
-                <img src={getEventImage(event.title)} alt={event.title} className="sep-banner-img" />
+                <img
+                  src={getEventImage(event.title)}
+                  alt={event.title}
+                  className="sep-banner-img"
+                />
                 <div className="sep-banner-overlay" />
                 <div className="sep-banner-content">
                   <h2 className="sep-event-title">{event.title}</h2>
@@ -117,9 +124,10 @@ export default function StaffEventPage() {
                 ))}
               </div>
               <a href={`/staff/update-setup/${event.eventId}`} className="sep-update-btn">
-                Update Setup Status →
+                Update Setup Status
               </a>
             </div>
+
           </div>
         )}
       </main>

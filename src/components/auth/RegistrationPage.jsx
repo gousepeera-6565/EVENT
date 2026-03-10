@@ -4,14 +4,20 @@ import "./RegistrationPage.css";
 
 const ROLES = [
   { value: "PLANNER", label: "Event Planner", icon: "📋", desc: "Create and manage events, allocate resources" },
-  { value: "STAFF", label: "Staff", icon: "🏟️", desc: "Handle venue setup and event operations" },
-  { value: "CLIENT", label: "Client", icon: "👥", desc: "View and track your event bookings" },
+  { value: "STAFF",   label: "Staff",         icon: "🏟️", desc: "Handle venue setup and event operations" },
+  { value: "CLIENT",  label: "Client",        icon: "👥", desc: "View and track your event bookings" },
+];
+
+const STEPS = [
+  { icon: "1️⃣", title: "Pick your role",      desc: "Choose whether you are a planner, staff or client" },
+  { icon: "2️⃣", title: "Fill your details",   desc: "Enter your username, email and set a password" },
+  { icon: "3️⃣", title: "Start using EventHub", desc: "Login and access your personalized dashboard" },
 ];
 
 export default function RegistrationPage() {
   const [form, setForm] = useState({ username: "", email: "", password: "", confirmPassword: "", role: "" });
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError]     = useState(null);
   const [success, setSuccess] = useState(false);
 
   const handleChange = (e) => {
@@ -21,10 +27,13 @@ export default function RegistrationPage() {
 
   const validate = () => {
     if (!form.username || !form.email || !form.password || !form.confirmPassword || !form.role)
-      return "All fields are required.";
-    if (!/\S+@\S+\.\S+/.test(form.email)) return "Please enter a valid email address.";
-    if (form.password.length < 6) return "Password must be at least 6 characters.";
-    if (form.password !== form.confirmPassword) return "Passwords do not match.";
+      return "Please fill in all fields.";
+    if (!/\S+@\S+\.\S+/.test(form.email))
+      return "Enter a valid email address.";
+    if (form.password.length < 6)
+      return "Password must be at least 6 characters.";
+    if (form.password !== form.confirmPassword)
+      return "Passwords do not match.";
     return null;
   };
 
@@ -37,7 +46,7 @@ export default function RegistrationPage() {
       await AuthService.register({ username: form.username, email: form.email, password: form.password, role: form.role });
       setSuccess(true);
     } catch (err) {
-      setError(err.response?.data?.message || "Registration failed. Please try again.");
+      setError("Registration failed. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -45,22 +54,63 @@ export default function RegistrationPage() {
 
   return (
     <div className="reg-page">
-      <div className="reg-container">
-        <div className="reg-header">
-          <div className="reg-logo">
-            <span><img src="/src/assets/eventhublogo.jpg" /></span>
-            <span className="reg-logo-text">EventHub</span></div>
-        </div>
 
+      {/* ── Left Panel ── */}
+      <div className="reg-left">
+        <div className="reg-left-content">
+
+          {/* Logo */}
+          <div className="reg-logo">
+            <img src="/src/assets/eventhublogo.jpg" alt="logo" />
+            <span className="reg-logo-name">EventHub</span>
+          </div>
+
+          {/* Quote */}
+          <div className="reg-quote-block">
+            <span className="reg-quote-mark">"</span>
+            <p className="reg-quote-text">
+              Every successful event starts with the right team, the right tools and a clear plan. EventHub brings all three together.
+            </p>
+          </div>
+
+          {/* How it works */}
+          <div className="reg-about-block">
+            <p className="reg-about-title">How it works</p>
+            <p className="reg-about-desc">
+              EventHub connects planners, staff and clients on one platform — making event coordination simple, fast and reliable.
+            </p>
+          </div>
+
+          <div className="reg-divider-line" />
+
+          {/* Steps */}
+          <p className="reg-steps-title">Getting started is easy</p>
+          <div className="reg-steps-list">
+            {STEPS.map((s) => (
+              <div key={s.title} className="reg-step-item">
+                <span className="reg-step-icon">{s.icon}</span>
+                <div>
+                  <div className="reg-step-title">{s.title}</div>
+                  <div className="reg-step-desc">{s.desc}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+        </div>
+      </div>
+
+      {/* ── Right Panel ── */}
+      <div className="reg-right">
         {!success ? (
           <div className="reg-card">
             <div className="reg-card-header">
-              <h1 className="reg-title">Create your account</h1>
-              <p className="reg-subtitle">Join EventHub and get started</p>
+              <h1 className="reg-title">Create Account</h1>
+              <p className="reg-subtitle">Fill in the details below to register</p>
             </div>
 
             <div className="reg-field-group">
-              <label className="reg-label">I am a... *</label>
+              <label className="reg-label">Select Role *</label>
               <div className="reg-role-grid">
                 {ROLES.map((r) => (
                   <button key={r.value}
@@ -79,11 +129,11 @@ export default function RegistrationPage() {
             <div className="reg-two-col">
               <div className="reg-field-group">
                 <label className="reg-label">Username *</label>
-                <input name="username" value={form.username} onChange={handleChange} placeholder="Choose a username" className="reg-input" />
+                <input name="username" value={form.username} onChange={handleChange} placeholder="Enter username" className="reg-input" />
               </div>
               <div className="reg-field-group">
                 <label className="reg-label">Email *</label>
-                <input name="email" type="email" value={form.email} onChange={handleChange} placeholder="your@email.com" className="reg-input" />
+                <input name="email" type="email" value={form.email} onChange={handleChange} placeholder="Enter email" className="reg-input" />
               </div>
             </div>
 
@@ -94,30 +144,35 @@ export default function RegistrationPage() {
               </div>
               <div className="reg-field-group">
                 <label className="reg-label">Confirm Password *</label>
-                <input name="confirmPassword" type="password" value={form.confirmPassword} onChange={handleChange} placeholder="Repeat password" className="reg-input" />
+                <input name="confirmPassword" type="password" value={form.confirmPassword} onChange={handleChange} placeholder="Re-enter password" className="reg-input" />
               </div>
             </div>
 
-            {error && <div className="reg-error"><span>⚠️</span> {error}</div>}
+            {error && <div className="reg-error">⚠️ {error}</div>}
 
-            <button onClick={handleRegister} disabled={loading} className={`reg-submit-btn${loading ? " loading" : ""}`}>
-              {loading ? "Creating account..." : "Create Account"}
+            <button onClick={handleRegister} disabled={loading} className="reg-submit-btn">
+              {loading ? "Please wait..." : "Register"}
             </button>
 
-            <p className="reg-login-link">Already have an account? <a href="/login" className="reg-link">Sign in</a></p>
+            <p className="reg-login-link">
+              Already have an account? <a href="/login" className="reg-link">Login here</a>
+            </p>
           </div>
+
         ) : (
           <div className="reg-success-card">
-            <div className="reg-success-icon">🎉</div>
-            <h2 className="reg-success-title">Account Created!</h2>
+            <div className="reg-success-icon">✅</div>
+            <h2 className="reg-success-title">Registration Successful!</h2>
             <p className="reg-success-msg">
-              Welcome to EventHub, <strong>{form.username}</strong>!<br />
-              Your <strong>{ROLES.find(r => r.value === form.role)?.label}</strong> account is ready.
+              Account created for <strong>{form.username}</strong> as{" "}
+              <strong>{ROLES.find((r) => r.value === form.role)?.label}</strong>.
+              <br />You can now login with your credentials.
             </p>
-            <a href="/login" className="reg-go-login-btn">Go to Sign In →</a>
+            <a href="/login" className="reg-go-login-btn">Go to Login</a>
           </div>
         )}
       </div>
+
     </div>
   );
 }

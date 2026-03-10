@@ -14,7 +14,7 @@ export default function LoginPage() {
 
   const handleLogin = async () => {
     if (!form.username || !form.password) {
-      setError("Please enter both username and password.");
+      setError("Please enter username and password.");
       return;
     }
     setLoading(true);
@@ -23,7 +23,7 @@ export default function LoginPage() {
       await AuthService.login(form);
       window.location.href = AuthService.getDashboardPath();
     } catch (err) {
-      setError(err.response?.data?.message || "Invalid credentials. Please try again.");
+      setError("Invalid username or password.");
     } finally {
       setLoading(false);
     }
@@ -31,22 +31,44 @@ export default function LoginPage() {
 
   return (
     <div className="login-page">
+
+      {/* ── Left Panel ── */}
       <div className="login-left">
-        <div className="login-left-overlay" />
         <div className="login-left-content">
+
+          {/* Logo */}
           <div className="login-logo">
-            <span><img src="/src/assets/eventhublogo.jpg" />
-            </span>
+            <img src="/src/assets/eventhublogo.jpg" alt="logo" />
             <span className="login-logo-name">EventHub</span>
           </div>
-          <h2 className="login-tagline">
-            Manage events.<br />Allocate resources.<br />Deliver excellence.
-          </h2>
+
+          {/* Tagline quote */}
+          <div className="login-quote-block">
+            <span className="login-quote-mark">"</span>
+            <p className="login-quote-text">
+              A great event doesn't happen by chance — it happens by planning, coordination and the right team at every step.
+            </p>
+          </div>
+
+          {/* What is EventHub */}
+          <div className="login-about-block">
+            <p className="login-about-title">What is EventHub?</p>
+            <p className="login-about-desc">
+              EventHub is a Event Management and Resource Allocation Managemeny System built to simplify how events are planned, staffed and managed.
+              From booking venues to allocating resources and tracking event status everything in one place.
+            </p>
+          </div>
+
+          {/* Divider */}
+          <div className="login-divider" />
+
+          {/* Roles */}
+          <p className="login-roles-title">Who can log in?</p>
           <div className="login-role-list">
             {[
-              { icon: "📋", role: "Planners", desc: "Create & manage events" },
-              { icon: "🏟️", role: "Staff", desc: "Handle venue setup" },
-              { icon: "👥", role: "Clients", desc: "Track your bookings" },
+              { icon: "📋", role: "Planner",  desc: "Create events, add resources, manage allocations" },
+              { icon: "🏟️", role: "Staff",    desc: "View assigned events and update setup status" },
+              { icon: "👥", role: "Client",   desc: "Check booking details and event schedule" },
             ].map((r) => (
               <div key={r.role} className="login-role-item">
                 <span className="login-role-icon">{r.icon}</span>
@@ -57,14 +79,16 @@ export default function LoginPage() {
               </div>
             ))}
           </div>
+
         </div>
       </div>
 
+      {/* ── Right Panel ── */}
       <div className="login-right">
         <div className="login-form-box">
           <div className="login-form-header">
-            <h1 className="login-form-title">Welcome back</h1>
-            <p className="login-form-subtitle">Sign in to your EventHub account</p>
+            <h1 className="login-form-title">Login</h1>
+            <p className="login-form-subtitle">Enter your credentials to continue</p>
           </div>
 
           <div className="login-field-group">
@@ -74,7 +98,7 @@ export default function LoginPage() {
               value={form.username}
               onChange={handleChange}
               onKeyDown={(e) => e.key === "Enter" && handleLogin()}
-              placeholder="Enter your username"
+              placeholder="Enter username"
               className="login-input"
               autoComplete="username"
             />
@@ -88,7 +112,7 @@ export default function LoginPage() {
               value={form.password}
               onChange={handleChange}
               onKeyDown={(e) => e.key === "Enter" && handleLogin()}
-              placeholder="Enter your password"
+              placeholder="Enter password"
               className="login-input"
               autoComplete="current-password"
             />
@@ -96,24 +120,25 @@ export default function LoginPage() {
 
           {error && (
             <div className="login-error">
-              <span>⚠️</span> {error}
+              ⚠️ {error}
             </div>
           )}
 
           <button
             onClick={handleLogin}
             disabled={loading}
-            className={`login-submit-btn${loading ? " loading" : ""}`}
+            className="login-submit-btn"
           >
-            {loading ? "Signing in..." : "Sign In"}
+            {loading ? "Please wait..." : "Login"}
           </button>
 
           <p className="login-register-link">
-            Don't have an account?{" "}
+            New user?{" "}
             <a href="/register" className="login-link">Register here</a>
           </p>
         </div>
       </div>
+
     </div>
   );
 }
