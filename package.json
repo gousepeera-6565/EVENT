@@ -2,13 +2,16 @@
   "name": "event",
   "private": true,
   "version": "0.0.0",
+  "homepage": "https://balu1536.github.io/EVENT",
   "type": "module",
   "scripts": {
     "start": "npm run dev",
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "axios": "^1.13.6",
@@ -27,6 +30,7 @@
     "eslint": "^9.39.1",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
+    "gh-pages": "^6.3.0",
     "globals": "^16.5.0",
     "vite": "^7.3.1"
   }

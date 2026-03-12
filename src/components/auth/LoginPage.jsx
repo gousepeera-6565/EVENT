@@ -1,6 +1,7 @@
 import { useState } from "react";
 import AuthService from "../services/authService";
 import "./LoginPage.css";
+import logo from "../../assets/eventhublogo.jpg";
 
 export default function LoginPage() {
   const [form, setForm] = useState({ username: "", password: "" });
@@ -38,7 +39,7 @@ export default function LoginPage() {
 
           {/* Logo */}
           <div className="login-logo">
-            <img src="/src/assets/eventhublogo.jpg" alt="logo" />
+            <img src={logo}alt="logo" />
             <span className="login-logo-name">EventHub</span>
           </div>
 
@@ -94,7 +95,7 @@ export default function LoginPage() {
           <div className="login-field-group">
             <label className="login-label">Username</label>
             <input
-              name="username"
+              name="email/username"
               value={form.username}
               onChange={handleChange}
               onKeyDown={(e) => e.key === "Enter" && handleLogin()}

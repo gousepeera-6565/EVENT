@@ -1,5 +1,6 @@
 import AuthService from "../services/authService";
 import "./Navbar.css";
+import logo from "../../assets/eventhublogo.jpg";
 
 const ROLE_LABELS = { PLANNER: "Planner Portal", STAFF: "Staff Portal", CLIENT: "Client Portal" };
 
@@ -42,7 +43,7 @@ export default function Navbar() {
       <div className="navbar-inner">
         <div className="navbar-brand">
           <span className="navbar-icon">
-            <img src="/src/assets/eventhublogo.jpg" alt="EventHub Logo" className="navbar-logo-img" />
+            <img src={logo} alt="EventHub Logo" className="navbar-logo-img" />
           </span>
           <span className="navbar-logo">EventHub</span>
           {role && <span className="navbar-role-tag">{ROLE_LABELS[role]}</span>}

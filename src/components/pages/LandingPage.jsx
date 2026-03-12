@@ -1,6 +1,7 @@
 import "./LandingPage.css";
 import { Link } from "react-router-dom";
 import AuthService from "../services/authService";
+import logo from "../../assets/eventhublogo.jpg";
 
 const FEATURES = [
   { icon: "📋", title: "Event Planning",       desc: "Create and manage events with all details in one place — date, time, location and description." },
@@ -32,7 +33,7 @@ export default function LandingPage() {
       <nav className="lp-nav">
         <div className="lp-nav-inner">
           <div className="lp-nav-brand">
-            <img src="/src/assets/eventhublogo.jpg" alt="logo" className="lp-nav-logo" />
+            <img src={logo} alt="logo" className="lp-nav-logo" />
             <span className="lp-nav-name">EventHub</span>
           </div>
           <div className="lp-nav-links">
@@ -198,7 +199,7 @@ export default function LandingPage() {
       <footer className="lp-footer">
         <div className="lp-footer-inner">
           <div className="lp-footer-brand">
-            <img src="/src/assets/eventhublogo.jpg" alt="logo" className="lp-footer-logo" />
+            <img src={logo} alt="logo" className="lp-footer-logo" />
             <span className="lp-footer-name">EventHub</span>
           </div>
           <p className="lp-footer-copy">© 2025 EventHub. Event Management & Resource Allocation System.</p>

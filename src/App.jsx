@@ -162,6 +162,9 @@ import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import AuthService from "./components/services/authService";
 
+
+const basename = process.env.NODE_ENV === "production" ? "/EVENT" : "/";
+
 // Auth
 import LoginPage from "./components/auth/LoginPage";
 import RegistrationPage from "./components/auth/RegistrationPage";
@@ -197,7 +200,7 @@ function ProtectedRoute({ children, allowedRoles }) {
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={basename}>
       <Routes>
         {/* Default redirect */}
         <Route path="/" element={<LandingPage />} />

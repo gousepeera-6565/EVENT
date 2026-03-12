@@ -1,6 +1,8 @@
 import { useState } from "react";
 import AuthService from "../services/authService";
 import "./RegistrationPage.css";
+import logo from "../../assets/eventhublogo.jpg";
+
 
 const ROLES = [
   { value: "PLANNER", label: "Event Planner", icon: "📋", desc: "Create and manage events, allocate resources" },
@@ -61,7 +63,7 @@ export default function RegistrationPage() {
 
           {/* Logo */}
           <div className="reg-logo">
-            <img src="/src/assets/eventhublogo.jpg" alt="logo" />
+            <img src={logo} alt="logo" />
             <span className="reg-logo-name">EventHub</span>
           </div>
 

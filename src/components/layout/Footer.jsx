@@ -1,4 +1,5 @@
 import "./Footer.css";
+import logo from "../../assets/eventhublogo.jpg";
 
 export default function Footer() {
   return (
@@ -8,7 +9,7 @@ export default function Footer() {
         {/* Brand */}
         <div className="footer-brand-col">
           <div className="footer-brand">
-            <img src="/src/assets/eventhublogo.jpg" alt="EventHub Logo" className="footer-logo-img" />
+            <img src={logo} alt="EventHub Logo" className="footer-logo-img" />
             <span className="footer-logo">EventHub</span>
           </div>
           <p className="footer-tagline">Event Management & Resource Allocation Platform for planners, staff and clients.</p>
