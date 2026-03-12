@@ -1,4 +1,6 @@
 import "./LandingPage.css";
+import { Link } from "react-router-dom";
+import AuthService from "../services/authService";
 
 const FEATURES = [
   { icon: "📋", title: "Event Planning",       desc: "Create and manage events with all details in one place — date, time, location and description." },
@@ -39,8 +41,8 @@ export default function LandingPage() {
             <a href="#testimonials" className="lp-nav-link">Reviews</a>
           </div>
           <div className="lp-nav-actions">
-            <a href="/login"    className="lp-nav-login">Login</a>
-            <a href="/register" className="lp-nav-register">Get Started</a>
+            <Link to="/login" className="lp-nav-login">Login</Link>
+            <Link to="/register" className="lp-nav-register">Get Started</Link>
           </div>
         </div>
       </nav>
@@ -60,8 +62,8 @@ export default function LandingPage() {
               Handle everything from resource allocation to setup tracking — all in one system.
             </p>
             <div className="lp-hero-btns">
-              <a href="/register" className="lp-btn-primary">Get Started →</a>
-              <a href="/login"    className="lp-btn-secondary">Login to Dashboard</a>
+              <Link to="/register" className="lp-btn-primary">Create an Account</Link>
+              <Link to="/login" className="lp-btn-white">Login</Link>
             </div>
             <div className="lp-hero-roles">
               {[
@@ -107,23 +109,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── Stats ── */}
-      <section className="lp-stats">
-        <div className="lp-stats-inner">
-          {[
-            { value: "3",   label: "User Roles",         icon: "👥" },
-            { value: "10",  label: "Microservices",      icon: "⚙️" },
-            { value: "100%",label: "Resource Tracking",  icon: "📊" },
-            { value: "1",   label: "Unified Platform",   icon: "🔗" },
-          ].map((s) => (
-            <div key={s.label} className="lp-stat-card">
-              <div className="lp-stat-icon">{s.icon}</div>
-              <div className="lp-stat-value">{s.value}</div>
-              <div className="lp-stat-label">{s.label}</div>
-            </div>
-          ))}
-        </div>
-      </section>
+
 
       {/* ── Features ── */}
       <section className="lp-features" id="features">
@@ -217,10 +203,11 @@ export default function LandingPage() {
           </div>
           <p className="lp-footer-copy">© 2025 EventHub. Event Management & Resource Allocation System.</p>
           <div className="lp-footer-links">
-            <a href="/about"    className="lp-footer-link">About</a>
-            <a href="/contact"  className="lp-footer-link">Contact</a>
-            <a href="/feedback" className="lp-footer-link">Feedback</a>
-            <a href="/login"    className="lp-footer-link">Login</a>
+            <Link to="/about"    className="lp-footer-link">About</Link>
+            <Link to="/contact"  className="lp-footer-link">Contact</Link>
+            <Link to="/feedback" className="lp-footer-link">Feedback</Link>
+            <Link to="/register" className="lp-footer-link">Create an Account</Link>
+            <Link to="/login" className="lp-footer-link">Login</Link>
           </div>
         </div>
       </footer>
