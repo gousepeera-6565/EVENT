@@ -1,6 +1,7 @@
 import { useState } from "react";
 import AuthService from "../services/authService";
 import "./RegistrationPage.css";
+import { Link } from "react-router-dom";
 import logo from "../../assets/eventhublogo.jpg";
 
 
@@ -47,7 +48,7 @@ export default function RegistrationPage() {
     try {
       await AuthService.register({ username: form.username, email: form.email, password: form.password, role: form.role });
       setSuccess(true);
-    } catch (err) {
+    } catch {
       setError("Registration failed. Please try again.");
     } finally {
       setLoading(false);
@@ -157,7 +158,7 @@ export default function RegistrationPage() {
             </button>
 
             <p className="reg-login-link">
-              Already have an account? <a href="/login" className="reg-link">Login here</a>
+              Already have an account? <Link to="/login" className="reg-link">Login here</Link>
             </p>
           </div>
 
@@ -170,7 +171,7 @@ export default function RegistrationPage() {
               <strong>{ROLES.find((r) => r.value === form.role)?.label}</strong>.
               <br />You can now login with your credentials.
             </p>
-            <a href="/login" className="reg-go-login-btn">Go to Login</a>
+            <Link to="/login" className="reg-go-login-btn">Go to Login</Link>
           </div>
         )}
       </div>

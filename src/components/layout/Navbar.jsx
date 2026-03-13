@@ -1,5 +1,6 @@
 import AuthService from "../services/authService";
 import "./Navbar.css";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/eventhublogo.jpg";
 
 const ROLE_LABELS = { PLANNER: "Planner Portal", STAFF: "Staff Portal", CLIENT: "Client Portal" };
@@ -19,23 +20,24 @@ const NAV_LINKS = {
     ...SHARED_LINKS,
   ],
   STAFF: [
-    { label: "My Event",     href: "/staff/event-details/1" },
+{ label: "My Event",     href: "/staff/event" },
     ...SHARED_LINKS,
   ],
   CLIENT: [
-    { label: "My Booking",   href: "/client/booking-details/1" },
+{ label: "My Booking",   href: "/client/booking" },
     ...SHARED_LINKS,
   ],
 };
 
 export default function Navbar() {
+  const navigate = useNavigate();
   const role     = AuthService.getRole();
   const username = AuthService.getUsername();
   const links    = NAV_LINKS[role] || [];
 
   const handleLogout = () => {
     AuthService.logout();
-    window.location.href = "/login";
+    navigate("/login");
   };
 
   return (
@@ -51,7 +53,7 @@ export default function Navbar() {
 
         <div className="navbar-links">
           {links.map((l) => (
-            <a key={l.label} href={l.href} className="navbar-link">{l.label}</a>
+          <Link key={l.label} to={l.href} className="navbar-link">{l.label}</Link>
           ))}
         </div>
 

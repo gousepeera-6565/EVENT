@@ -163,7 +163,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import AuthService from "./components/services/authService";
 
 
-const basename = process.env.NODE_ENV === "production" ? "/EVENT" : "/";
+const basename = import.meta.env.DEV ? "/" : "/EVENT";
 
 // Auth
 import LoginPage from "./components/auth/LoginPage";

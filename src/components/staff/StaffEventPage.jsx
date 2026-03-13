@@ -4,11 +4,12 @@ import { getEventImage } from "../services/eventImageService";
 import Navbar from "../layout/Navbar";
 import Footer from "../layout/Footer";
 import "./StaffEventPage.css";
+import { useParams } from "react-router-dom";
 
 const TYPE_ICON = { EQUIPMENT: "🔧", STAFF: "👤", VENUE: "🏛️" };
 
 export default function StaffEventPage() {
-  const eventId = 1; // TODO: replace with useParams()
+  const { eventId } = useParams();
   const [event, setEvent]     = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError]     = useState(null);
