@@ -40,20 +40,48 @@ export default function RegistrationPage() {
     return null;
   };
 
-  const handleRegister = async () => {
-    const validationError = validate();
-    if (validationError) { setError(validationError); return; }
-    setLoading(true);
-    setError(null);
-    try {
-      await AuthService.register({ username: form.username, email: form.email, password: form.password, role: form.role });
-      setSuccess(true);
-    } catch {
-      setError("Registration failed. Please try again.");
-    } finally {
-      setLoading(false);
+  // ======== CHANGED REGISTER FUNCTION START ========
+
+const handleRegister = async () => {
+  const validationError = validate();
+
+  if (validationError) {
+    setError(validationError);
+    return;
+  }
+
+  setLoading(true);
+  setError(null);
+
+  try {
+
+    const response = await fetch("http://localhost:8080/api/user/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        username: form.username,
+        email: form.email,
+        password: form.password,
+        role: form.role
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error("Registration failed");
     }
-  };
+
+    setSuccess(true);
+
+  } catch (error) {
+    setError("Registration failed. Please try again.");
+  } finally {
+    setLoading(false);
+  }
+};
+
+// ======== CHANGED REGISTER FUNCTION END ========
 
   return (
     <div className="reg-page">

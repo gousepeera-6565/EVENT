@@ -1,5 +1,4 @@
-import { useState } from "react";
-import AuthService from "../services/authService";
+import { useState } from "react"; 
 import "./LoginPage.css";
 import logo from "../../assets/eventhublogo.jpg";
 import { useNavigate } from "react-router-dom";
@@ -16,22 +15,73 @@ export default function LoginPage() {
     setError(null);
   };
 
-  const handleLogin = async () => {
-    if (!form.username || !form.password) {
-      setError("Please enter username and password.");
-      return;
+ // ======== CHANGED LOGIN FUNCTION START ========
+
+const handleLogin = async () => {
+  if (!form.username || !form.password) {
+    setError("Please enter username and password.");
+    return;
+  }
+
+  setLoading(true);
+  setError(null);
+
+  try {
+
+    const response = await fetch("http://localhost:8080/api/user/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        username: form.username,
+        password: form.password
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error();
     }
-    setLoading(true);
-    setError(null);
-    try {
-      await AuthService.login(form);
-      navigate(AuthService.getDashboardPath());
-    } catch {
-      setError("Invalid username or password.");
-    } finally {
-      setLoading(false);
+
+    const token = await response.text();
+
+    // store JWT token
+    localStorage.setItem("token", token);
+
+    // // decode JWT token
+    // const payload = JSON.parse(atob(token.split(".")[1]));
+    // const role = payload.role;
+    
+
+    const payload = JSON.parse(atob(token.split(".")[1]));
+const role = payload.role;
+
+// store role also
+localStorage.setItem("role", role);
+localStorage.setItem("username", form.username);
+
+    // redirect based on role
+    if (role === "PLANNER") {
+      navigate("/planner/events");
+    } 
+    else if (role === "STAFF") {
+      navigate("/staff/event-details/1");
+    } 
+    else if (role === "CLIENT") {
+      navigate("/client/booking-details/1");
+    } 
+    else {
+      navigate("/");
     }
-  };
+
+  } catch (error) {
+    setError("Invalid username or password.");
+  } finally {
+    setLoading(false);
+  }
+};
+
+// ======== CHANGED LOGIN FUNCTION END ========
 
   return (
     <div className="login-page">

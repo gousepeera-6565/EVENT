@@ -1,36 +1,36 @@
-// import axios from "axios";
-// import AuthService from "./authService";
+import axios from "axios";
+import AuthService from "./authService";
 
-// const BASE_URL = "http://localhost:8080";
+const BASE_URL = "http://localhost:8080";
 
-// const axiosInstance = axios.create({
-//   baseURL: BASE_URL,
-//   headers: { "Content-Type": "application/json" },
-// });
+const axiosInstance = axios.create({
+  baseURL: BASE_URL,
+  headers: { "Content-Type": "application/json" },
+});
 
-// // Attach JWT token to every request
-// axiosInstance.interceptors.request.use(
-//   (config) => {
-//     const token = AuthService.getToken();
-//     if (token) {
-//       config.headers["Authorization"] = `Bearer ${token}`;
-//     }
-//     return config;
-//   },
-//   (error) => Promise.reject(error)
-// );
+// Attach JWT token to every request
+axiosInstance.interceptors.request.use(
+  (config) => {
+    const token = AuthService.getToken();
+    if (token) {
+      config.headers["Authorization"] = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
 
-// // Handle 401 — token expired or invalid
-// axiosInstance.interceptors.response.use(
-//   (response) => response,
-//   (error) => {
-//     if (error.response?.status === 401) {
-//       AuthService.logout();
-//       window.location.href = "/login";
-//     }
-//     return Promise.reject(error);
-//   }
-// );
+// Handle 401 — token expired or invalid
+axiosInstance.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      AuthService.logout();
+      window.location.href = "/login";
+    }
+    return Promise.reject(error);
+  }
+);
 
 // const HttpService = {
 //   get: (url, params = {}) => axiosInstance.get(url, { params }),

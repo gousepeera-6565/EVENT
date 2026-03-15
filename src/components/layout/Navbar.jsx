@@ -20,11 +20,11 @@ const NAV_LINKS = {
     ...SHARED_LINKS,
   ],
   STAFF: [
-{ label: "My Event",     href: "/staff/event" },
+{ label: "My Event", href: "/staff/event-details/1" },
     ...SHARED_LINKS,
   ],
   CLIENT: [
-{ label: "My Booking",   href: "/client/booking" },
+ { label: "My Booking", href: "/client/booking-details/1" },
     ...SHARED_LINKS,
   ],
 };
